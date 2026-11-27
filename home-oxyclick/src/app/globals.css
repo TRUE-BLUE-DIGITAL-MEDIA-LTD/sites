@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-poppins: var(--font-poppins), Arial, Helvetica, sans-serif;
+  --font-rubik: var(--font-rubik), Arial, Helvetica, sans-serif;
+  --font-source: var(--font-source), Arial, Helvetica, sans-serif;
+  --font-helvetica: Helvetica, Arial, sans-serif;
+
+  --color-brand: #41729f;
+  --color-ink: #192e44;
+  --color-body: #646464;
+  --color-night: #0c0c0c;
+
+  --animate-pulse-once: pulse-once 1s ease both;
+  --animate-fade-in: fade-in 0.3s ease both;
+}
+
+@keyframes pulse-once {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-body);
+  font-family: var(--font-poppins);
+}
+
+/* Nav underline: grows in on hover, stays on the current page. */
+.nav-link {
+  position: relative;
+  padding-bottom: 6px;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-brand);
+  opacity: 0;
+  transform: scaleX(0);
+  transition:
+    transform 0.2s ease-out,
+    opacity 0.2s ease-out;
+}
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* The events photo stays put while the page scrolls over it (desktop only;
+   fixed backgrounds are unreliable on touch devices). */
+@media (min-width: 1025px) {
+  .bg-parallax {
+    background-attachment: fixed;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
