@@ -6,6 +6,8 @@ Marketing sites and landing pages, moved off Duda and hosted on Netlify. Each fo
 | --- | --- |
 | `home-oxyclick` | https://home.oxyclick.com |
 | `topdollarhub` | https://www.topdollarhub.com |
+| `truebluedigitalmedia` | https://www.truebluedigitalmedia.com |
+| `whitecroft` | https://www.whitecroft.co.th |
 
 ## How a site is built
 

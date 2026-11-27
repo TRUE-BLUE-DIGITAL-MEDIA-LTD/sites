@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-playfair: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-open-sans), Arial, Helvetica, sans-serif;
+  --font-barlow: var(--font-barlow), Arial, Helvetica, sans-serif;
+
+  --color-brand: #997361;
+  --color-ink: #272725;
+  --color-body: #888a8c;
+  --color-slate: #3c3e47;
+  --color-mist: #f4f4f3;
+
+  /* The original site uses the fonts' natural line height everywhere, so the
+     named text sizes must not bring their own. */
+  --text-xs--line-height: normal;
+  --text-sm--line-height: normal;
+  --text-base--line-height: normal;
+  --text-lg--line-height: normal;
+  --text-xl--line-height: normal;
+  --text-2xl--line-height: normal;
+
+  /* The desktop header and layout start at 1025px, like the original site. */
+  --breakpoint-lg: 64.0625rem;
+
+  --animate-fade-in: fade-in 0.3s ease both;
+  --animate-fade-in-left: fade-in-left 1s ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Page content is at most 960px wide, and 1200px on screens from 1200px up,
+   like the original. The gaps between columns are a share of that width
+   (1.5%), written as a percentage of each column in the page files. */
+@utility page-width {
+  max-width: 960px;
+  @media (min-width: 1200px) {
+    max-width: 1200px;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: normal;
+}
+
+/* Buttons show the hand cursor, like links. */
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* Desktop nav underline: grows in from the left on hover and stays on the
+   current page. The matching ::before keeps the label vertically centred. */
+.nav-text::before,
+.nav-text::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: 2px solid transparent;
+}
+.nav-text::before {
+  margin-bottom: 0.2em;
+}
+.nav-text::after {
+  margin-top: 0.2em;
+  /* White even on the white scrolled header, as on the original site. */
+  border-top-color: #ffffff;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    transform 0.2s ease-out,
+    opacity 0.2s ease-out;
+}
+.nav-item:hover > a .nav-text::after,
+.nav-item:has(:focus-visible) > a .nav-text::after,
+.nav-item[data-current="true"] > a .nav-text::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Desktop dropdowns fade and slide down when their parent is hovered, or when
+   the keyboard focus is inside. :focus-visible rather than :focus-within, so a
+   dropdown does not stay open over the next page after one of its links is
+   clicked with the mouse (a clicked link keeps the focus). */
+.nav-sub {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    transform 0.4s ease-out,
+    opacity 0.1s ease-out,
+    visibility 0s 0.1s;
+}
+.nav-item:hover > .nav-sub,
+.nav-item:has(:focus-visible) > .nav-sub {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition:
+    transform 0.4s ease-out,
+    opacity 0.1s ease-out;
+}
+
+/* Photos behind the home page sections stay put while the page scrolls over
+   them (desktop only; fixed backgrounds are unreliable on touch devices).
+   Where the browser can tie an animation to scrolling, the photo also drifts
+   up by 200px while its section crosses the screen, as on the original. */
+@keyframes parallax {
+  from {
+    background-position-y: 100px;
+  }
+  to {
+    background-position-y: -100px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .bg-parallax {
+    background-attachment: fixed;
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .bg-parallax {
+        animation: parallax linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+    }
+  }
+}
+
+/* The dark map look of the original contact page. */
+.map-dark {
+  filter: invert(1) hue-rotate(180deg) grayscale(1) brightness(0.9) contrast(0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
