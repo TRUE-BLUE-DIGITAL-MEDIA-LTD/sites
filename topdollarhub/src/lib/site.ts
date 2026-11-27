@@ -1,6 +1,6 @@
 export const site = {
   name: "Top Dollar Hub",
-  url: "https://www.topdollarhub.com",
+  url: "https://topdollarhub.com",
   description:
     "Top Dollar Hub provides only the best offers of your Dating & Gambling Traffic. Get the best rates for your Dating & Gambling Traffic only with Top Dollar Hub.",
   signInUrl: "https://affiliates.topdollarhub.com/affiliate/login",
