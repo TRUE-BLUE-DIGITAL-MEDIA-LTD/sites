@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-poppins: var(--font-poppins), Arial, Helvetica, sans-serif;
+
+  --color-brand: #3c45b4;
+  --color-navy: #23418c;
+  --color-steel: #41729f;
+  --color-body: #646464;
+  --color-ink: #333333;
+
+  /* Above this width the full desktop header shows; at or below it, the
+     hamburger header (as on the previous site). */
+  --breakpoint-desk: 64.0625rem; /* 1025px */
+  /* The previous site kept the service cards narrow below this width. */
+  --breakpoint-wide: 75rem; /* 1200px */
+
+  --animate-fade-in: fade-in 0.3s ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-body);
+  font-family: var(--font-poppins);
+}
+
+/* Anchored sections stop below the fixed header (135px at most). */
+[id] {
+  scroll-margin-top: 140px;
+}
+
+/* The home hero photo stays put while the page scrolls over it (desktop only;
+   fixed backgrounds are unreliable on touch devices). HeroSection.tsx adds
+   the slow drift on top. */
+.hero-bg {
+  background-size: contain;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+}
+@media (min-width: 768px) {
+  .hero-bg {
+    background-size: cover;
+  }
+}
+@media (min-width: 1025px) {
+  .hero-bg {
+    background-attachment: fixed;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
